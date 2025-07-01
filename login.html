@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup - EduVerse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('img01.jpg') no-repeat center center/cover;
+            padding: 20px;
+        }
+
+        /* Container */
+        .container {
+            width: 100%;
+            max-width: 450px;
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            color: #2c3e50;
+            font-size: 28px;
+            font-weight: 600;
+        }
+
+        .input-group {
+            width: 100%;
+            position: relative;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px 12px 40px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7f8c8d;
+        }
+
+        /* Gender Selection */
+        .gender-container {
+            width: 100%;
+            text-align: left;
+            margin: 10px 0;
+        }
+
+        .gender-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gender-option {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .gender-option input {
+            width: auto;
+        }
+
+        /* Button */
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            background: #27ae60;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #219653;
+            transform: translateY(-2px);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        /* Link Styling */
+        .form-footer {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+
+        a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        a:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+
+        .home-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 15px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .home-link:hover {
+            color: #3498db;
+        }
+
+        /* Toggle Forms */
+        .sign-up {
+            display: none;
+        }
+
+        /* Password toggle */
+        .password-container {
+            position: relative;
+        }
+
+        .show-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #7f8c8d;
+        }
+
+        /* Error Messages */
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        .success-message {
+            color: #27ae60;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* Loading spinner */
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Signup Form -->
+        <div class="form-container sign-up">
+            <form id="signupForm">
+                <h2>Create Account</h2>
+
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="signupFirstName" placeholder="First Name" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="signupLastName" placeholder="Last Name" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-at input-icon"></i>
+                    <input type="text" id="signupUsername" placeholder="Username" required>
+                </div>
+
+                <!-- Gender Selection -->
+                <div class="gender-container">
+                    <span class="gender-title">Select Gender:</span>
+                    <div class="gender-options">
+                        <label class="gender-option">
+                            <input type="radio" name="gender" value="male" required> Male
+                        </label>
+                        <label class="gender-option">
+                            <input type="radio" name="gender" value="female" required> Female
+                        </label>
+                        <label class="gender-option">
+                            <input type="radio" name="gender" value="other" required> Other
+                        </label>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" id="signupEmail" placeholder="Email" required>
+                </div>
+
+                <div class="input-group">
+                    <i class="fas fa-phone input-icon"></i>
+                    <input type="tel" id="signupPhone" placeholder="Phone Number" required>
+                </div>
+
+                <div class="input-group password-container">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="signupPassword" placeholder="Password" required minlength="6">
+                    <i class="fas fa-eye show-password" onclick="togglePassword('signupPassword', this)"></i>
+                </div>
+
+                <div class="input-group password-container">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="signupConfirm" placeholder="Confirm Password" required minlength="6">
+                    <i class="fas fa-eye show-password" onclick="togglePassword('signupConfirm', this)"></i>
+                </div>
+
+                <div id="signupError" class="error-message"></div>
+                <div id="signupSuccess" class="success-message"></div>
+                
+                <button type="submit" id="signupBtn">
+                    Sign Up
+                    <span class="spinner" id="signupSpinner"></span>
+                </button>
+                
+                <p class="form-footer">Already have an account? <a href="#" id="signInLink">Login</a></p>
+                <a href="index.html" class="home-link"><i class="fas fa-home"></i> Back to Home</a>
+            </form>
+        </div>
+
+        <!-- Login Form -->
+        <div class="form-container sign-in">
+            <form id="loginForm">
+                <h2>Login</h2>
+
+                <div class="input-group">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" id="loginUsername" placeholder="Username or Email" required>
+                </div>
+
+                <div class="input-group password-container">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" id="loginPassword" placeholder="Password" required>
+                    <i class="fas fa-eye show-password" onclick="togglePassword('loginPassword', this)"></i>
+                </div>
+
+                <div id="loginError" class="error-message"></div>
+                
+                <button type="submit" id="loginBtn">
+                    Login
+                    <span class="spinner" id="loginSpinner"></span>
+                </button>
+                
+                <p class="form-footer">Don't have an account? <a href="#" id="signUpLink">Sign Up</a></p>
+                <a href="index.html" class="home-link"><i class="fas fa-home"></i> Back to Home</a>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Toggle between forms
+        document.getElementById("signUpLink").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.querySelector(".sign-in").style.display = "none";
+            document.querySelector(".sign-up").style.display = "block";
+            clearMessages();
+        });
+
+        document.getElementById("signInLink").addEventListener("click", function(event) {
+            event.preventDefault();
+            document.querySelector(".sign-up").style.display = "none";
+            document.querySelector(".sign-in").style.display = "block";
+            clearMessages();
+        });
+
+        function clearMessages() {
+            document.getElementById('loginError').style.display = 'none';
+            document.getElementById('signupError').style.display = 'none';
+            document.getElementById('signupSuccess').style.display = 'none';
+        }
+
+        // Toggle password visibility
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        // Handle login form submission
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('loginUsername').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginError');
+            const loginBtn = document.getElementById('loginBtn');
+            const spinner = document.getElementById('loginSpinner');
+            
+            // Show loading state
+            loginBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            errorElement.style.display = 'none';
+            
+            // Simple validation
+            if (!username || !password) {
+                showError(errorElement, 'Please enter both username and password');
+                loginBtn.disabled = false;
+                spinner.style.display = 'none';
+                return;
+            }
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // In a real app, you would make an actual API call here
+                // For demo purposes, we'll accept any non-empty credentials
+                if (username && password) {
+                    // Store user session
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('username', username);
+                    
+                    // Redirect to courses page
+                    window.location.href = 'course.html';
+                } else {
+                    showError(errorElement, 'Invalid username or password');
+                }
+                
+                loginBtn.disabled = false;
+                spinner.style.display = 'none';
+            }, 1500);
+        });
+
+        // Handle signup form submission
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('signupFirstName').value;
+            const lastName = document.getElementById('signupLastName').value;
+            const username = document.getElementById('signupUsername').value;
+            const email = document.getElementById('signupEmail').value;
+            const phone = document.getElementById('signupPhone').value;
+            const password = document.getElementById('signupPassword').value;
+            const confirmPassword = document.getElementById('signupConfirm').value;
+            const gender = document.querySelector('input[name="gender"]:checked')?.value;
+            
+            const errorElement = document.getElementById('signupError');
+            const successElement = document.getElementById('signupSuccess');
+            const signupBtn = document.getElementById('signupBtn');
+            const spinner = document.getElementById('signupSpinner');
+            
+            // Show loading state
+            signupBtn.disabled = true;
+            spinner.style.display = 'inline-block';
+            errorElement.style.display = 'none';
+            successElement.style.display = 'none';
+            
+            // Validation
+            if (!firstName || !lastName || !username || !email || !phone || !password || !confirmPassword || !gender) {
+                showError(errorElement, 'Please fill all fields');
+                signupBtn.disabled = false;
+                spinner.style.display = 'none';
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showError(errorElement, 'Passwords do not match');
+                signupBtn.disabled = false;
+                spinner.style.display = 'none';
+                return;
+            }
+            
+            if (password.length < 6) {
+                showError(errorElement, 'Password must be at least 6 characters');
+                signupBtn.disabled = false;
+                spinner.style.display = 'none';
+                return;
+            }
+            
+            // Simulate API call with timeout
+            setTimeout(() => {
+                // In a real app, you would send this data to your backend
+                // For demo purposes, we'll just show success
+                successElement.textContent = 'Account created successfully! Redirecting to login...';
+                successElement.style.display = 'block';
+                
+                // Clear form
+                document.getElementById('signupForm').reset();
+                
+                // Switch to login form after 2 seconds
+                setTimeout(() => {
+                    document.querySelector(".sign-up").style.display = "none";
+                    document.querySelector(".sign-in").style.display = "block";
+                    successElement.style.display = 'none';
+                }, 2000);
+                
+                signupBtn.disabled = false;
+                spinner.style.display = 'none';
+            }, 1500);
+        });
+
+        function showError(element, message) {
+            element.textContent = message;
+            element.style.display = 'block';
+        }
+
+        // Check if user is already logged in
+        if (localStorage.getItem('isLoggedIn') === 'true') {
+            window.location.href = 'course.html';
+        }
+    </script>
+</body>
+</html>

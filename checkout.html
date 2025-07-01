@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - EduVerse</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #2e46b8;
+            --secondary-color: #ff7e33;
+            --accent-color: #2eb8b8;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .checkout-container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+        
+        .checkout-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .page-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        .back-btn {
+            background-color: var(--accent-color);
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(46, 184, 184, 0.3);
+            color: white;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(46, 184, 184, 0.4);
+            background-color: #239595;
+            color: white;
+        }
+        
+        .form-control:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(52, 152, 219, 0.25);
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #253d9e;
+            border-color: #253d9e;
+        }
+        
+        .order-summary {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .coupon-container {
+            display: flex;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .coupon-input {
+            flex: 1;
+        }
+        
+        .coupon-success {
+            color: #28a745;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .coupon-error {
+            color: #dc3545;
+            font-weight: 500;
+            display: none;
+        }
+        
+        .price-breakdown {
+            border-top: 1px solid #dee2e6;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        .total-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+        }
+        
+        .course-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .course-thumbnail {
+            width: 100px;
+            height: 75px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .checkout-container {
+                padding: 15px;
+            }
+            
+            .checkout-card {
+                padding: 20px;
+            }
+            
+            .course-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">EduVerse</a>
+            <a href="course.html" class="back-btn">
+                <i class="bi bi-arrow-left"></i> Back to Courses
+            </a>
+        </div>
+    </nav>
+    
+    <div class="checkout-container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="checkout-card">
+                    <h2 class="page-title">Complete Your Purchase</h2>
+                    
+                    <div class="course-info">
+                        <img id="courseThumbnail" src="" alt="Course thumbnail" class="course-thumbnail">
+                        <div>
+                            <h4 id="courseTitle"></h4>
+                            <div class="price-tag" id="originalPrice"></div>
+                        </div>
+                    </div>
+                    
+                    <form id="checkoutForm">
+                        <h5 class="mb-3">Personal Information</h5>
+                        <div class="mb-3">
+                            <label for="fullName" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="fullName" required>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                        </div>
+                        
+                        <h5 class="mb-3 mt-4">Payment Information</h5>
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select class="form-select" id="paymentMethod" required>
+                                <option value="">Select payment method</option>
+                                <option value="creditCard">Credit/Debit Card</option>
+                                <option value="upi">UPI Payment</option>
+                                <option value="netBanking">Net Banking</option>
+                                <option value="wallet">Wallet</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-check mb-4">
+                            <input class="form-check-input" type="checkbox" id="termsAgree" required>
+                            <label class="form-check-label" for="termsAgree">
+                                I agree to the <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Terms of Service</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100 py-2">
+                            <i class="bi bi-lock-fill"></i> Complete Purchase
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="col-lg-5">
+                <div class="checkout-card">
+                    <h5 class="mb-3">Order Summary</h5>
+                    <div class="order-summary">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Course:</span>
+                            <span id="summaryCourse"></span>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span>Original Price:</span>
+                            <span id="summaryOriginalPrice"></span>
+                        </div>
+                        
+                        <div class="coupon-container">
+                            <input type="text" class="form-control coupon-input" id="couponCode" placeholder="Coupon code">
+                            <button class="btn btn-outline-primary" id="applyCoupon">Apply</button>
+                        </div>
+                        <div class="coupon-success" id="couponSuccess">
+                            <i class="bi bi-check-circle-fill"></i> Coupon applied successfully!
+                        </div>
+                        <div class="coupon-error" id="couponError">
+                            <i class="bi bi-x-circle-fill"></i> Invalid coupon code
+                        </div>
+                        
+                        <div class="price-breakdown">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Discount:</span>
+                                <span id="discountAmount">-₹0</span>
+                            </div>
+                            <div class="d-flex justify-content-between fw-bold total-amount">
+                                <span>Total Amount:</span>
+                                <span id="totalAmount"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms Modal -->
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Terms of Service</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>By purchasing this course, you agree to the following terms:</p>
+                    <ul>
+                        <li>All sales are final - no refunds will be issued</li>
+                        <li>You will have lifetime access to the course materials</li>
+                        <li>The content is for personal use only - no commercial redistribution</li>
+                        <li>We reserve the right to update course content without notice</li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Course thumbnail mapping
+        const courseThumbnails = {
+            'Web Development': 'web-dev.jpg',
+            'Data Analytics': 'data-analytics.png',
+            'Blockchain': 'blockchain.jpg',
+            'Data Structures & Algorithms': 'dsa.png',
+            'DevOps': 'devops.jpg',
+            'Data Science': 'data-science.png',
+            'Cyber Security': 'cyber-security.jpg',
+            'Machine Learning': 'machine.jpeg',
+            'Cloud Computing': 'cloud-computing.jpg'
+        };
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get course info from sessionStorage
+            const courseName = sessionStorage.getItem('courseName');
+            const coursePrice = parseInt(sessionStorage.getItem('coursePrice'));
+            
+            // Set course info in the page
+            document.getElementById('courseTitle').textContent = courseName;
+            document.getElementById('summaryCourse').textContent = courseName;
+            document.getElementById('originalPrice').textContent = `₹${coursePrice}`;
+            document.getElementById('summaryOriginalPrice').textContent = `₹${coursePrice}`;
+            document.getElementById('totalAmount').textContent = `₹${coursePrice}`;
+            
+            // Set course-specific thumbnail
+            const thumbnail = courseThumbnails[courseName] || 'default-course.jpg';
+            document.getElementById('courseThumbnail').src = thumbnail;
+            
+            // Coupon code functionality
+            const applyCouponBtn = document.getElementById('applyCoupon');
+            const couponCodeInput = document.getElementById('couponCode');
+            const couponSuccess = document.getElementById('couponSuccess');
+            const couponError = document.getElementById('couponError');
+            const discountAmount = document.getElementById('discountAmount');
+            const totalAmount = document.getElementById('totalAmount');
+            
+            applyCouponBtn.addEventListener('click', function() {
+                const couponCode = couponCodeInput.value.trim();
+                
+                // Hide previous messages
+                couponSuccess.style.display = 'none';
+                couponError.style.display = 'none';
+                
+                if (couponCode === 'FREE10') {
+                    // Apply 10% discount
+                    const discount = Math.round(coursePrice * 0.1);
+                    const newTotal = coursePrice - discount;
+                    
+                    discountAmount.textContent = `-₹${discount}`;
+                    totalAmount.textContent = `₹${newTotal}`;
+                    
+                    couponSuccess.style.display = 'block';
+                } else if (couponCode === '') {
+                    couponError.textContent = 'Please enter a coupon code';
+                    couponError.style.display = 'block';
+                } else {
+                    couponError.textContent = 'Invalid coupon code';
+                    couponError.style.display = 'block';
+                }
+            });
+            
+            // Form submission
+            const checkoutForm = document.getElementById('checkoutForm');
+            checkoutForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Validate form
+                if (!document.getElementById('termsAgree').checked) {
+                    alert('Please agree to the Terms of Service');
+                    return;
+                }
+                
+                // Get form values
+                const formData = {
+                    fullName: document.getElementById('fullName').value,
+                    email: document.getElementById('email').value,
+                    phone: document.getElementById('phone').value,
+                    paymentMethod: document.getElementById('paymentMethod').value,
+                    courseName: courseName,
+                    originalPrice: coursePrice,
+                    discount: discountAmount.textContent.replace('-₹', ''),
+                    totalAmount: totalAmount.textContent.replace('₹', '')
+                };
+                
+                // In a real app, you would send this data to your server
+                console.log('Form submitted:', formData);
+                
+                // Show success message (in a real app, you'd redirect to a success page)
+                alert(`Purchase successful! Thank you for buying ${courseName}. Check your email for access instructions.`);
+                
+                // Clear sessionStorage
+                sessionStorage.removeItem('courseName');
+                sessionStorage.removeItem('coursePrice');
+                
+                // Redirect to home page after purchase
+                window.location.href = 'index.html';
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses - EduVerse</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #2e46b8;
+            --secondary-color: #ff7e33;
+            --accent-color: #2eb8b8;
+            --dark-color: #343a40;
+            --light-color: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color)) !important;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: white !important;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            text-align: center;
+        }
+        
+        .course-container {
+            padding: 50px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .course-box {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .course-box:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .course-img {
+            width: 100%;
+            border-radius: 12px;
+            height: 180px;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+        
+        .course-box h4 {
+            margin-top: 10px;
+            font-weight: 700;
+            color: var(--primary-color);
+            font-size: 1.3rem;
+        }
+        
+        .course-box p {
+            font-size: 15px;
+            color: #555;
+            margin-bottom: 8px;
+        }
+        
+        .course-box strong {
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .btn-free {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            font-weight: 600;
+        }
+        
+        .btn-free:hover {
+            background-color: #239595;
+            transform: translateY(-2px);
+        }
+        
+        .btn-buy {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            flex: 1;
+            font-weight: 600;
+        }
+        
+        .btn-buy:hover {
+            background-color: #e6702a;
+            transform: translateY(-2px);
+        }
+        
+        .page-title {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 40px;
+            position: relative;
+            padding-bottom: 15px;
+            text-align: center;
+        }
+        
+        .page-title:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            border-radius: 2px;
+        }
+        
+        .back-btn {
+            background-color: var(--accent-color);
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(46, 184, 184, 0.3);
+            color: white;
+            padding: 8px 20px;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(46, 184, 184, 0.4);
+            background-color: #239595;
+            color: white;
+        }
+        
+        .price-tag {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin: 10px 0;
+        }
+        
+        .course-description {
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-brand {
+                font-size: 1.5rem;
+            }
+            
+            .course-box {
+                padding: 20px;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">EduVerse Courses</a>
+            <button class="back-btn" id="backToHome">
+                <i class="bi bi-house-door"></i> Back to Home
+            </button>
+        </div>
+    </nav>
+    
+    <div class="container course-container">
+        <h2 class="page-title">Explore Our Premium Courses</h2>
+        <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+                <div class="course-box">
+                    <img src="/Python.jpg" alt="Web Development" class="course-img">
+                    <h4>Python </h4>
+                    <p><strong>Introduction:</strong> Learn Basic of Python and modern frameworks.</p>
+                    <div class="price-tag">₹699</div>
+                    <p class="course-description">From basics to advanced concepts, this course covers front-end and back-end development to make you a full-stack web developer.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Web Development')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Web Development', 1200)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="web-dev.jpg" alt="Web Development" class="course-img">
+                    <h4>Web Development</h4>
+                    <p><strong>Introduction:</strong> Learn HTML, CSS, JavaScript, and modern frameworks.</p>
+                    <div class="price-tag">₹1200</div>
+                    <p class="course-description">From basics to advanced concepts, this course covers front-end and back-end development to make you a full-stack web developer.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Web Development')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Web Development', 1200)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="data-analytics.png" alt="Data Analytics" class="course-img">
+                    <h4>Data Analytics</h4>
+                    <p><strong>Introduction:</strong> Learn Python, SQL, R, and MS Excel.</p>
+                    <div class="price-tag">₹1500</div>
+                    <p class="course-description">Transform raw data into meaningful insights with powerful analytical tools and visualization techniques used by industry professionals.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Data Analytics')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Data Analytics', 1500)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="blockchain.jpg" alt="Blockchain" class="course-img">
+                    <h4>Blockchain</h4>
+                    <p><strong>Introduction:</strong> Learn Solidity, Java, Python, and more.</p>
+                    <div class="price-tag">₹2200</div>
+                    <p class="course-description">Dive into decentralized applications, smart contracts, and cryptocurrency fundamentals with hands-on blockchain projects.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Blockchain')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Blockchain', 2200)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="dsa.png" alt="DSA" class="course-img" height="180px">
+                    <h4>Data Structures & Algorithms</h4>
+                    <p><strong>Introduction:</strong> Learn C/C++/Java & different algorithms.</p>
+                    <div class="price-tag">₹3500</div>
+                    <p class="course-description">Master the fundamentals of computer science with comprehensive coverage of data structures and algorithm design patterns.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Data Structures & Algorithms')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Data Structures & Algorithms', 3500)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="devops.jpg" alt="DevOps" class="course-img">
+                    <h4>DevOps</h4>
+                    <p><strong>Introduction:</strong> Learn Kubernetes, Docker, Git, and more.</p>
+                    <div class="price-tag">₹4200</div>
+                    <p class="course-description">Bridge the gap between development and operations with CI/CD pipelines, infrastructure as code, and cloud-native technologies.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('DevOps')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('DevOps', 4200)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="data-science.png" alt="Data Science" class="course-img">
+                    <h4>Data Science</h4>
+                    <p><strong>Introduction:</strong> Learn Python, SQL, Excel, TensorFlow, R etc.</p>
+                    <div class="price-tag">₹5000</div>
+                    <p class="course-description">Unlock the power of data with statistical analysis, machine learning, and data visualization techniques used by data scientists.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Data Science')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Data Science', 5000)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="cyber-security.jpg" alt="Cyber Security" class="course-img">
+                    <h4>Cyber Security</h4>
+                    <p><strong>Introduction:</strong> Learn ethical hacking and network security.</p>
+                    <div class="price-tag">₹5200</div>
+                    <p class="course-description">Protect systems and data from cyber threats with penetration testing, cryptography, and security best practices.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Cyber Security')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Cyber Security', 5200)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="machine.jpeg" alt="Machine Learning" class="course-img">
+                    <h4>Machine Learning</h4>
+                    <p><strong>Introduction:</strong> Build AI models using Python and TensorFlow.</p>
+                    <div class="price-tag">₹5500</div>
+                    <p class="course-description">Master supervised and unsupervised learning techniques, neural networks, and model evaluation in this comprehensive course designed for aspiring AI engineers.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Machine Learning')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Machine Learning', 5500)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="course-box">
+                    <img src="cloud-computing.jpg" alt="Cloud Computing" class="course-img">
+                    <h4>Cloud Computing</h4>
+                    <p><strong>Introduction:</strong> Learn MEAN Stack, AWS, and Cloud Native Development.</p>
+                    <div class="price-tag">₹5500</div>
+                    <p class="course-description">Master cloud services, deployment models, and architecture patterns to build scalable and resilient applications in the cloud.</p>
+                    <div class="btn-group">
+                        <button class="btn-free" onclick="handleFreeAccess('Cloud Computing')">
+                            <i class="bi bi-unlock"></i> Free Access
+                        </button>
+                        <button class="btn-buy" onclick="handlePurchase('Cloud Computing', 5500)">
+                            <i class="bi bi-cart"></i> Buy Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">EduVerse Courses</a>
+            <div class="d-flex align-items-center">
+                <span class="text-light me-3" id="welcomeUser"></span>
+                <button class="back-btn" id="logoutBtn">
+                    <i class="bi bi-box-arrow-right"></i> Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container course-container" id="courseContainer">
+        <!-- Course content will be loaded here if user is authenticated -->
+    </div>
+
+    <div class="container text-center py-5" id="loginPrompt" style="display: none;">
+        <h2 class="mb-4">Please login to access our courses</h2>
+        <a href="login.html" class="btn btn-primary btn-lg">
+            <i class="bi bi-box-arrow-in-right"></i> Go to Login
+        </a>
+    </div>
+
+    <!-- Previous modals and scripts remain the same -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Check authentication on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn');
+            const username = localStorage.getItem('username');
+            const courseContainer = document.getElementById('courseContainer');
+            const loginPrompt = document.getElementById('loginPrompt');
+            const welcomeUser = document.getElementById('welcomeUser');
+            
+            if (isLoggedIn === 'true' && username) {
+                // User is authenticated - show courses
+                courseContainer.style.display = 'block';
+                loginPrompt.style.display = 'none';
+                welcomeUser.textContent = `Welcome, ${username}`;
+                
+                // Load your existing course content here
+                // ... (your existing course loading code)
+                
+            } else {
+                // User not authenticated - show login prompt
+                courseContainer.style.display = 'none';
+                loginPrompt.style.display = 'block';
+            }
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                window.location.href = 'login.html';
+            });
+        });
+
+        // Your existing course page JavaScript remains the same
+        // ... (handleFreeAccess, handlePurchase functions, etc.)
+    </script>
+
+    <!-- Modal for Free Access -->
+    <div class="modal fade" id="freeAccessModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="freeAccessModalTitle">Free Access</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="freeAccessModalBody">
+                    <!-- Content will be inserted here by JavaScript -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="proceedToFreeContent">Proceed</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Handle free access button clicks
+        function handleFreeAccess(courseName) {
+            // Convert course name to URL-friendly format
+            const courseSlug = courseName.toLowerCase().replace(/ /g, '-').replace(/&/g, 'and');
+            window.location.href = `course-${courseSlug}.html`;
+        }
+
+        // Handle purchase button clicks
+        function handlePurchase(courseName, coursePrice) {
+            // Store course info in sessionStorage to use on checkout page
+            sessionStorage.setItem('courseName', courseName);
+            sessionStorage.setItem('coursePrice', coursePrice);
+            window.location.href = 'checkout.html';
+        }
+
+        // Initialize Bootstrap modal
+        const freeAccessModal = new bootstrap.Modal(document.getElementById('freeAccessModal'));
+        
+        // Back to home button functionality
+        document.getElementById('backToHome').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+        
+        // Add animation to course boxes when they come into view
+        const observerOptions = {
+            threshold: 0.1
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.course-box').forEach((box, index) => {
+            box.style.opacity = 0;
+            box.style.transform = 'translateY(20px)';
+            box.style.transition = `all 0.5s ease ${index * 0.1}s`;
+            observer.observe(box);
+        });
+    </script>
+</body>
+</html>
