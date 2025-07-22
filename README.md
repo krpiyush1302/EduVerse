@@ -79,21 +79,21 @@ cd backend<br>
 npm install<br>
 npm start<br>
 
-📊 Usage Overview
-Sign up or Log in to access a personalized dashboard
-View Courses, Progress Statistics, and Recommendations
-Progress is tracked, with interactive charts to visualize learning trends.
+📊 Usage Overview<br>
+Sign up or Log in to access a personalized dashboard<br>
+View Courses, Progress Statistics, and Recommendations<br>
+Progress is tracked, with interactive charts to visualize learning trends.<br>
 
 
-🛠 Future Enhancements
-Real-time chat or forum for peer/community support
-Recommendation engine powered by AI or ML
-Rich media (video, quizzes, assignments) integration
-Certification badges and shareable achievements
-Backend API enhancements for scalability & security
+🛠 Future Enhancements<br>
+Real-time chat or forum for peer/community support<br>
+Recommendation engine powered by AI or ML<br>
+Rich media (video, quizzes, assignments) integration<br>
+Certification badges and shareable achievements<br>
+Backend API enhancements for scalability & security<br>
 
-🤝 Contributions & Feedback
-We welcome your feedback, suggestions, and code contributions!
-Feel free to open issues or submit pull requests.
+🤝 Contributions & Feedback<br>
+We welcome your feedback, suggestions, and code contributions!<br>
+Feel free to open issues or submit pull requests.<br>
 
-⭐ If you’re impressed by EduVerse, don’t forget to star the repo!
+⭐ If you’re impressed by EduVerse, don’t forget to star the repo!<br>
