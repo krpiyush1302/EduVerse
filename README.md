@@ -31,21 +31,21 @@
 
 ## 📂 Folder Structure
 
-EduVerse/
-│
-├── public/ # Static assets & index.html
-├── src/
-│ ├── components/ # Reusable React components
-│ ├── pages/ # Route-based page layouts
-│ ├── services/ # API / Auth / MySQL connectors
-│ ├── utils/ # Helper functions (e.g., validation)
-│ ├── App.js
-│ └── index.js
-│
-├── sql/ # MySQL schema and seed data
-├── package.json
-├── README.md
-└── LICENSE
+EduVerse/<br>
+│<br>
+├── public/ # Static assets & index.html<br>
+├── src/<br>
+│ ├── components/ # Reusable React components<br>
+│ ├── pages/ # Route-based page layouts<br>
+│ ├── services/ # API / Auth / MySQL connectors<br>
+│ ├── utils/ # Helper functions (e.g., validation)<br>
+│ ├── App.js<br>
+│ └── index.js<br>
+│<br>
+├── sql/ # MySQL schema and seed data<br>
+├── package.json<br>
+├── README.md<br>
+└── LICENSE<br>
 
 
 ---
@@ -60,24 +60,24 @@ EduVerse/
 
 ### 🔧 Installation Steps
 
-1. **Clone the Repository**
-git clone https://github.com/krpiyush1302/EduVerse.git
-cd EduVerse
+1. **Clone the Repository**<br>
+git clone https://github.com/krpiyush1302/EduVerse.git<br>
+cd EduVerse<br>
 
-2. **Install Frontend Dependencies
-npm install
+2. **Install Frontend Dependencies<br>
+npm install<br>
 
 3. **Configure MySQL Database
-Run the scripts in /sql/schema.sql to create required tables.
-Update database configuration details in services/api.js or .env.
+Run the scripts in /sql/schema.sql to create required tables.<br>
+Update database configuration details in services/api.js or .env.<br>
 
-4. **Start the React App
-npm start
+4. **Start the React App<br>
+npm start<br>
 
-5. **(If applicable) Run Backend API
-cd backend
-npm install
-npm start
+5. **(If applicable) Run Backend API<br>
+cd backend<br>
+npm install<br>
+npm start<br>
 
 📊 Usage Overview
 Sign up or Log in to access a personalized dashboard
