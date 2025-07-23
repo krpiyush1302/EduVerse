@@ -93,11 +93,11 @@ Certification badges and shareable achievements<br>
 Backend API enhancements for scalability & security<br>
 
 
-🔗 Connect With Me
+🔗 Connect With Me<br>
 
-💼 GitHub: github.com/krpiyush1302
-🔗 LinkedIn: linkedin.com/in/krpiyush1308
-📧 Email: pk7049153@gmail.com
+💼 GitHub: github.com/krpiyush1302<br>
+🔗 LinkedIn: linkedin.com/in/krpiyush1308<br>
+📧 Email: pk7049153@gmail.com<br>
 
 
 
