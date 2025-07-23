@@ -92,6 +92,15 @@ Rich media (video, quizzes, assignments) integration<br>
 Certification badges and shareable achievements<br>
 Backend API enhancements for scalability & security<br>
 
+
+🔗 Connect With Me
+
+💼 GitHub: github.com/krpiyush1302
+🔗 LinkedIn: linkedin.com/in/krpiyush1308
+📧 Email: pk7049153@gmail.com
+
+
+
 🤝 Contributions & Feedback<br>
 We welcome your feedback, suggestions, and code contributions!<br>
 Feel free to open issues or submit pull requests.<br>
